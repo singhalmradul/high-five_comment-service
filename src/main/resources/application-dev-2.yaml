@@ -1,0 +1,16 @@
+eureka:
+  client:
+    enabled: false
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: comment-service
+
+  data:
+    mongodb:
+      uri: ${DB_URI:mongodb://localhost:27017/high-five}
+      database: high-five
+      uuid-representation: standard
