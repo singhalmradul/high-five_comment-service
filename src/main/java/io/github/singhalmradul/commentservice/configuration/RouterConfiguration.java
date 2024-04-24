@@ -19,10 +19,11 @@ public class RouterConfiguration {
             route()
             .path("/posts/{postId}/comments", builder -> builder
                 .GET("/count", handler::getCommentCountByPostId)
-                .POST(handler::comment)
+                .POST(handler::createComment)
                 .GET(handler::getCommentsByPostId)
             )
             .path("/comments", builder -> builder
+                .GET("/{id}", handler::getCommentById)
                 .GET(handler::getAllComments)
             )
             .build()

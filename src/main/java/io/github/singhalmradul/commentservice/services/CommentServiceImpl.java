@@ -42,14 +42,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void comment(UUID postId, UUID userId, String text) {
+    public Comment createComment(UUID postId, UUID userId, String text) {
         System.out.println("" +
-            "\033[1;91m user_id= " + userId
-            + " commented \033[43m" +text
-            + "\033[1;91m on post_id= " + postId+ ",\033[0m"
+            "\033[1;95m user_id= " + userId
+            + " commented \033[1;91m" +text
+            + "\033[1;95m on post_id= " + postId+ ",\033[0m"
         );
         validate(postId, userId);
-        repository.save(
+        return repository.save(
             Comment.builder()
                 .id(randomUUID())
                 .postId(postId)
@@ -62,10 +62,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentRecord> getAllComments() {
+
         return repository.findAll().stream().map(this::addData).toList();
     }
 
     private CommentRecord addData(Comment comment) {
+
         return new CommentRecord(
             comment.getId(),
             comment.getPostId(),
@@ -78,5 +80,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentRecord> getCommentsByPostId(UUID postId) {
         return repository.findByPostIdOrderByCreatedAt(postId).stream().map(this::addData).toList();
+    }
+
+    @Override
+    public CommentRecord getCommentById(UUID commentId) {
+
+        return repository.findById(commentId)
+            .map(this::addData)
+            .orElseThrow(() -> new ServerWebInputException("Comment not found"));
     }
 }
