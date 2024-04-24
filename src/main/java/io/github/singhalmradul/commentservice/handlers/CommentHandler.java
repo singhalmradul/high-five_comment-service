@@ -7,9 +7,11 @@ public interface CommentHandler {
 
     ServerResponse getCommentCountByPostId(ServerRequest request);
 
-    ServerResponse comment(ServerRequest request);
+    ServerResponse createComment(ServerRequest request);
 
     ServerResponse getAllComments(ServerRequest request);
 
     ServerResponse getCommentsByPostId(ServerRequest request);
+
+    ServerResponse getCommentById(ServerRequest request);
 }
